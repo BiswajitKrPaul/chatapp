@@ -1,7 +1,7 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:chatapp/constants/api_constants.dart';
-import 'package:chatapp/models/user_db.dart';
+import 'package:chatapp/models/sessions_db.dart';
 
 class APIServer {
   static APIServer? _instance;
@@ -23,7 +23,6 @@ class APIServer {
   Future<Session> createSession(String email, String password) async {
     Session _session = await APIServer.instance._account
         .createSession(email: email, password: password);
-    await checkAndUpdateLoggedInUser();
     return _session;
   }
 
@@ -41,36 +40,40 @@ class APIServer {
     );
   }
 
-  Future<void> logout() async {
-    return await APIServer._instance!._account
-        .deleteSession(sessionId: 'current');
-  }
-
   Future<User> getLoggedInUser() async {
     return await APIServer._instance!._account.get();
   }
 
-  Future<User> checkAndUpdateLoggedInUser() async {
-    User _user;
-    try {
-      _user = await APIServer._instance!._account.get();
-      DocumentList _docs = await APIServer._instance!._database.listDocuments(
-        collectionId: APIConstants.userDB,
-        filters: ['userid=${_user.$id}'],
-      );
-      UserDB _currentUser = UserDB.fromMap(_docs.documents[0].data);
-      _currentUser.isOnline = true;
-      await APIServer._instance!._database.updateDocument(
-        collectionId: APIConstants.userDB,
-        documentId: _docs.documents[0].$id,
-        data: {
-          'isOnline': true,
-        },
-      );
-      return _user;
-    } on AppwriteException catch (e) {
-      throw Exception(e.message);
-    }
+  Future<void> logout() async {
+    Session _session =
+        await APIServer._instance!._account.getSession(sessionId: 'current');
+    DocumentList listDoc = await APIServer._instance!._database.listDocuments(
+      collectionId: APIConstants.sessionsDB,
+      filters: ['sessionid=${_session.$id}'],
+    );
+    await APIServer._instance!._database.deleteDocument(
+      collectionId: APIConstants.sessionsDB,
+      documentId: listDoc.documents[0].$id,
+    );
+
+    return await APIServer._instance!._account
+        .deleteSession(sessionId: 'current');
+  }
+
+  Future<Document> setOnlineOfflineStatus(
+      User user, Session session, bool isOnline) async {
+    SessionsDB _sessionsDB = SessionsDB(
+      userid: user.$id,
+      isonline: isOnline,
+      lastseen: DateTime.now().microsecondsSinceEpoch,
+      sessionid: session.$id,
+    );
+    return await APIServer._instance!._database.createDocument(
+      collectionId: APIConstants.sessionsDB,
+      data: _sessionsDB.toMap(),
+      read: ['role:member'],
+      write: ['user:${user.$id}'],
+    );
   }
 
   Future<Document> createDocument(

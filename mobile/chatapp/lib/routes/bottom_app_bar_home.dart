@@ -1,3 +1,4 @@
+import 'package:chatapp/constants/string_constants.dart';
 import 'package:chatapp/routes/chats.dart';
 import 'package:chatapp/routes/friends.dart';
 import 'package:chatapp/routes/profile.dart';
@@ -21,9 +22,21 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
     Friends(),
     Profile(),
   ];
+  List<String> title = const [
+    AppStrings.chats,
+    AppStrings.status,
+    AppStrings.friends,
+    AppStrings.profile,
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          title[currentIndex],
+        ),
+        centerTitle: true,
+      ),
       body: routes[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
@@ -38,7 +51,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               LineIcons.comments,
               size: 30.sp,
             ),
-            label: 'Chats',
+            label: AppStrings.chats,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
@@ -46,7 +59,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               LineIcons.heart,
               size: 30.sp,
             ),
-            label: 'Status',
+            label: AppStrings.status,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
@@ -54,7 +67,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               LineIcons.users,
               size: 30.sp,
             ),
-            label: 'Friends',
+            label: AppStrings.friends,
             backgroundColor: Theme.of(context).primaryColor,
           ),
           BottomNavigationBarItem(
@@ -62,7 +75,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               LineIcons.userEdit,
               size: 30.sp,
             ),
-            label: 'Profile',
+            label: AppStrings.profile,
             backgroundColor: Theme.of(context).primaryColor,
           ),
         ],

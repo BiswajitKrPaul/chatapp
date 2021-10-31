@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
           ),
           home: FutureBuilder(
-            future: APIServer.instance.checkAndUpdateLoggedInUser(),
+            future: APIServer.instance.getLoggedInUser(),
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Scaffold(
