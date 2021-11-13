@@ -13,12 +13,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Login>((event, emit) async {
       try {
         emit.call(LoginLoading());
-        Session _session = await APIServer.instance.createSession(
+        await APIServer.instance.createSession(
           event.email,
           event.password,
         );
         final user = await APIServer.instance.getLoggedInUser();
-        await APIServer.instance.setOnlineOfflineStatus(user, _session, true);
         emit.call(
           LoginDone(
             user,

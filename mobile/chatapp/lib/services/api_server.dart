@@ -45,17 +45,7 @@ class APIServer {
   }
 
   Future<void> logout() async {
-    Session _session =
-        await APIServer._instance!._account.getSession(sessionId: 'current');
-    DocumentList listDoc = await APIServer._instance!._database.listDocuments(
-      collectionId: APIConstants.sessionsDB,
-      filters: ['sessionid=${_session.$id}'],
-    );
-    await APIServer._instance!._database.deleteDocument(
-      collectionId: APIConstants.sessionsDB,
-      documentId: listDoc.documents[0].$id,
-    );
-
+    await APIServer._instance!._account.getSession(sessionId: 'current');
     return await APIServer._instance!._account
         .deleteSession(sessionId: 'current');
   }
