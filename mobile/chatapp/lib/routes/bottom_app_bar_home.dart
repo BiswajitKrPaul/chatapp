@@ -35,12 +35,6 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    // getUser();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
