@@ -42,10 +42,8 @@ class _HomePageState extends State<HomePage> {
             );
           }
           if (state is EmailVerifyLoaded) {
-            if (state.user.emailVerification) {
-              return CustomBottomAppBar(
-                user: state.user,
-              );
+            if (state.currentUser.emailVerification) {
+              return const CustomBottomAppBar();
             } else {
               return EmailNotVerified(
                 onTap: onTap,

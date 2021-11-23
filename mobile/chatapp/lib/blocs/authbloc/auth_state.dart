@@ -1,42 +1,53 @@
 part of 'auth_bloc.dart';
 
 @immutable
-abstract class AuthState {}
+abstract class AuthState {
+  final Map<String, dynamic> user;
+  const AuthState(this.user);
+}
 
-class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {
+  AuthInitial() : super({});
+}
 
 class LoginError extends AuthState {
   final String errorMessage;
-  LoginError(this.errorMessage);
+  LoginError(this.errorMessage) : super({});
 }
 
 class LoginDone extends AuthState {
-  final User user;
-  LoginDone(this.user);
+  final User currentUser;
+  LoginDone(this.currentUser) : super(currentUser.toMap());
 }
 
-class LoginLoading extends AuthState {}
+class LoginLoading extends AuthState {
+  LoginLoading(Map user) : super({});
+}
 
 class SignUpError extends AuthState {
   final String errorMessage;
-  SignUpError(this.errorMessage);
+  SignUpError(this.errorMessage) : super({});
 }
 
-class SignUpLoading extends AuthState {}
+class SignUpLoading extends AuthState {
+  SignUpLoading() : super({});
+}
 
 class SignUpDone extends AuthState {
-  final User user;
-  SignUpDone(this.user);
+  final User currentUser;
+  SignUpDone(this.currentUser) : super(currentUser.toMap());
 }
 
-class EmailVerifyLoading extends AuthState {}
+class EmailVerifyLoading extends AuthState {
+  EmailVerifyLoading() : super({});
+}
 
 class EmailVerifyLoaded extends AuthState {
-  final User user;
-  EmailVerifyLoaded(this.user);
+  final User currentUser;
+  EmailVerifyLoaded(this.currentUser) : super(currentUser.toMap());
 }
 
 class EmailVerifyError extends AuthState {
   final String message;
-  EmailVerifyError(this.message);
+  EmailVerifyError(this.message) : super({});
 }

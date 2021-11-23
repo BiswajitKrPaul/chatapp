@@ -12,7 +12,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<Login>((event, emit) async {
       try {
-        emit.call(LoginLoading());
+        emit.call(LoginLoading(const {}));
         await APIServer.instance.createSession(
           event.email,
           event.password,

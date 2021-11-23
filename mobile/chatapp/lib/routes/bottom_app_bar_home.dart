@@ -1,4 +1,5 @@
 import 'package:appwrite/models.dart';
+import 'package:chatapp/blocs/authbloc/auth_bloc.dart';
 import 'package:chatapp/constants/string_constants.dart';
 import 'package:chatapp/routes/chats.dart';
 import 'package:chatapp/routes/friends.dart';
@@ -6,14 +7,14 @@ import 'package:chatapp/routes/profile.dart';
 import 'package:chatapp/routes/status.dart';
 import 'package:chatapp/services/api_server.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'login_page.dart';
 
 class CustomBottomAppBar extends StatefulWidget {
-  final User user;
-  const CustomBottomAppBar({Key? key, required this.user}) : super(key: key);
+  const CustomBottomAppBar({Key? key}) : super(key: key);
 
   @override
   State<CustomBottomAppBar> createState() => _CustomBottomAppBarState();
@@ -33,6 +34,15 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
     AppStrings.friends,
     AppStrings.profile,
   ];
+  late final User user;
+
+  @override
+  void initState() {
+    super.initState();
+    final stateValue = BlocProvider.of<AuthBloc>(context).state;
+    debugPrint(stateValue.user.toString());
+    user = User.fromMap(stateValue.user);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +65,8 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
                     radius: 30.r,
                   ),
                   ListTile(
-                    title: Text(widget.user.name),
-                    subtitle: Text(widget.user.email),
+                    title: Text(user.name),
+                    subtitle: Text(user.email),
                     trailing: IconButton(
                       onPressed: () async {
                         await APIServer.instance.logout();
@@ -65,7 +75,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
                           LoginPage.routeName,
                         );
                       },
-                      icon: const Icon(FontAwesomeIcons.signOutAlt),
+                      icon: const Icon(Icons.logout),
                     ),
                     contentPadding: const EdgeInsets.only(
                       left: 4,
@@ -76,6 +86,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.message),
               title: const Text(AppStrings.chats),
               onTap: () => setState(
                 () {
@@ -86,6 +97,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
             ),
             const Divider(),
             ListTile(
+              leading: const Icon(FontAwesomeIcons.stream),
               title: const Text(AppStrings.status),
               onTap: () => setState(
                 () {
@@ -96,6 +108,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
             ),
             const Divider(),
             ListTile(
+              leading: const Icon(FontAwesomeIcons.userFriends),
               title: const Text(AppStrings.friends),
               onTap: () => setState(
                 () {
@@ -106,6 +119,7 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
             ),
             const Divider(),
             ListTile(
+              leading: const Icon(FontAwesomeIcons.userAlt),
               title: const Text(AppStrings.profile),
               onTap: () => setState(
                 () {

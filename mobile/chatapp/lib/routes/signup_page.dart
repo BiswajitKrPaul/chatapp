@@ -102,7 +102,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (state is SignUpDone) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('User ${state.user.name} created'),
+                              content: Text(
+                                  'User ${state.currentUser.name} created'),
                             ),
                           );
                           Navigator.of(context).pushNamedAndRemoveUntil(
