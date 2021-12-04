@@ -7,7 +7,8 @@ abstract class AuthState {
 }
 
 class AuthInitial extends AuthState {
-  AuthInitial() : super({});
+  final Map<String, dynamic>? currentUser;
+  AuthInitial(this.currentUser) : super(currentUser ?? {});
 }
 
 class LoginError extends AuthState {
@@ -21,7 +22,7 @@ class LoginDone extends AuthState {
 }
 
 class LoginLoading extends AuthState {
-  LoginLoading(Map user) : super({});
+  LoginLoading() : super({});
 }
 
 class SignUpError extends AuthState {

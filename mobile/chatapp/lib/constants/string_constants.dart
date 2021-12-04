@@ -11,4 +11,5 @@ class AppStrings {
   static const String profile = 'Profile';
   static const String status = 'Status';
   static const String friends = 'Friends';
+  static const String session = 'Sessions';
 }

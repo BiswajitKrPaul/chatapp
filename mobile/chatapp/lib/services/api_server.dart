@@ -78,4 +78,8 @@ class APIServer {
       write: write,
     );
   }
+
+  Future<SessionList> getSessions() async {
+    return await APIServer._instance!._account.getSessions();
+  }
 }

@@ -4,6 +4,7 @@ import 'package:chatapp/constants/string_constants.dart';
 import 'package:chatapp/routes/chats.dart';
 import 'package:chatapp/routes/friends.dart';
 import 'package:chatapp/routes/profile.dart';
+import 'package:chatapp/routes/session_lists.dart';
 import 'package:chatapp/routes/status.dart';
 import 'package:chatapp/services/api_server.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,14 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
     Status(),
     Friends(),
     Profile(),
+    SessionLists(),
   ];
   List<String> title = const [
     AppStrings.chats,
     AppStrings.status,
     AppStrings.friends,
     AppStrings.profile,
+    AppStrings.session,
   ];
   late final User user;
 
@@ -124,6 +127,17 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
               onTap: () => setState(
                 () {
                   currentIndex = 3;
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(FontAwesomeIcons.solidClock),
+              title: const Text(AppStrings.session),
+              onTap: () => setState(
+                () {
+                  currentIndex = 4;
                   Navigator.pop(context);
                 },
               ),

@@ -9,10 +9,10 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthInitial()) {
+  AuthBloc({required Map<String, dynamic>? user}) : super(AuthInitial(user)) {
     on<Login>((event, emit) async {
       try {
-        emit.call(LoginLoading(const {}));
+        emit.call(LoginLoading());
         await APIServer.instance.createSession(
           event.email,
           event.password,

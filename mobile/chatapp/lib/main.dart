@@ -1,4 +1,6 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:chatapp/blocs/authbloc/auth_bloc.dart';
+import 'package:chatapp/blocs/sessionbloc/sessionlist_bloc.dart';
 import 'package:chatapp/routes/home_page.dart';
 import 'package:chatapp/routes/login_page.dart';
 import 'package:chatapp/routes/signup_page.dart';
@@ -7,13 +9,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Map<String, dynamic> user;
+  try {
+    final response = await APIServer.instance.getLoggedInUser();
+    user = response.toMap();
+  } on AppwriteException catch (_) {
+    //debugPrint(err.message);
+    user = {};
+  }
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (ctx) => AuthBloc(),
+          create: (ctx) => AuthBloc(user: user),
         ),
+        BlocProvider(
+          create: (ctx) => SessionlistBloc(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -28,9 +42,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late final Map<String, dynamic> _currentUser;
+
   @override
   void initState() {
     super.initState();
+    _currentUser = BlocProvider.of<AuthBloc>(context).state.user;
   }
 
   @override
@@ -44,25 +61,7 @@ class _MyAppState extends State<MyApp> {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: FutureBuilder(
-            future: APIServer.instance.getLoggedInUser(),
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              }
-              if (snapshot.hasData) {
-                //debugPrint((snapshot.data as User).toMap().toString());
-                return const HomePage();
-              } else {
-                //debugPrint(snapshot.error.toString());
-                return const LoginPage();
-              }
-            },
-          ),
+          home: _currentUser.isEmpty ? const LoginPage() : const HomePage(),
           routes: {
             LoginPage.routeName: (ctx) => const LoginPage(),
             HomePage.routeName: (ctx) => const HomePage(),
