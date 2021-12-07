@@ -43,7 +43,6 @@ class _CustomBottomAppBarState extends State<CustomBottomAppBar> {
   void initState() {
     super.initState();
     final stateValue = BlocProvider.of<AuthBloc>(context).state;
-    debugPrint(stateValue.user.toString());
     user = User.fromMap(stateValue.user);
   }
 

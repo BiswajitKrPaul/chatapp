@@ -1,6 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:chatapp/blocs/authbloc/auth_bloc.dart';
-import 'package:chatapp/blocs/sessionbloc/sessionlist_bloc.dart';
+import 'package:chatapp/blocs/sessionbloc/session_bloc.dart';
 import 'package:chatapp/routes/home_page.dart';
 import 'package:chatapp/routes/login_page.dart';
 import 'package:chatapp/routes/signup_page.dart';
@@ -26,7 +26,7 @@ Future<void> main() async {
           create: (ctx) => AuthBloc(user: user),
         ),
         BlocProvider(
-          create: (ctx) => SessionlistBloc(),
+          create: (ctx) => SessionBloc(),
         )
       ],
       child: const MyApp(),
