@@ -30,5 +30,19 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         }
       },
     );
+
+    on<RemoveSession>((event, emit) async {
+      try {
+        await APIServer.instance.logoutSession(
+          state.sessionList.sessions[event.pos].$id,
+        );
+        add(const SessionEvent.getAllSessions());
+      } on AppwriteException catch (err) {
+        emit(state.copyWith(
+          errorMessage: err.message ?? 'Error Occured',
+          hasErrorOccured: true,
+        ));
+      }
+    });
   }
 }

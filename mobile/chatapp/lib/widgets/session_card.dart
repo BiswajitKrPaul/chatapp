@@ -2,6 +2,7 @@ import 'package:chatapp/blocs/sessionbloc/session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SessionCard extends StatelessWidget {
   final SessionState state;
@@ -44,7 +45,11 @@ class SessionCard extends StatelessWidget {
         trailing: state.sessionList.sessions[pos].current
             ? null
             : IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  context
+                      .read<SessionBloc>()
+                      .add(SessionEvent.removeSession(pos));
+                },
                 icon: const Icon(LineIcons.alternateTrashAlt),
               ),
       ),

@@ -20,6 +20,12 @@ class _$SessionEventTearOff {
   GetAllSessions getAllSessions() {
     return const GetAllSessions();
   }
+
+  RemoveSession removeSession(int pos) {
+    return RemoveSession(
+      pos,
+    );
+  }
 }
 
 /// @nodoc
@@ -30,32 +36,38 @@ mixin _$SessionEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getAllSessions,
+    required TResult Function(int pos) removeSession,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetAllSessions value) getAllSessions,
+    required TResult Function(RemoveSession value) removeSession,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -119,6 +131,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() getAllSessions,
+    required TResult Function(int pos) removeSession,
   }) {
     return getAllSessions();
   }
@@ -127,6 +140,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
   }) {
     return getAllSessions?.call();
   }
@@ -135,6 +149,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
     required TResult orElse(),
   }) {
     if (getAllSessions != null) {
@@ -147,6 +162,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(GetAllSessions value) getAllSessions,
+    required TResult Function(RemoveSession value) removeSession,
   }) {
     return getAllSessions(this);
   }
@@ -155,6 +171,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
   }) {
     return getAllSessions?.call(this);
   }
@@ -163,6 +180,7 @@ class _$GetAllSessions implements GetAllSessions {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
     required TResult orElse(),
   }) {
     if (getAllSessions != null) {
@@ -174,6 +192,139 @@ class _$GetAllSessions implements GetAllSessions {
 
 abstract class GetAllSessions implements SessionEvent {
   const factory GetAllSessions() = _$GetAllSessions;
+}
+
+/// @nodoc
+abstract class $RemoveSessionCopyWith<$Res> {
+  factory $RemoveSessionCopyWith(
+          RemoveSession value, $Res Function(RemoveSession) then) =
+      _$RemoveSessionCopyWithImpl<$Res>;
+  $Res call({int pos});
+}
+
+/// @nodoc
+class _$RemoveSessionCopyWithImpl<$Res> extends _$SessionEventCopyWithImpl<$Res>
+    implements $RemoveSessionCopyWith<$Res> {
+  _$RemoveSessionCopyWithImpl(
+      RemoveSession _value, $Res Function(RemoveSession) _then)
+      : super(_value, (v) => _then(v as RemoveSession));
+
+  @override
+  RemoveSession get _value => super._value as RemoveSession;
+
+  @override
+  $Res call({
+    Object? pos = freezed,
+  }) {
+    return _then(RemoveSession(
+      pos == freezed
+          ? _value.pos
+          : pos // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$RemoveSession implements RemoveSession {
+  const _$RemoveSession(this.pos);
+
+  @override
+  final int pos;
+
+  @override
+  String toString() {
+    return 'SessionEvent.removeSession(pos: $pos)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is RemoveSession &&
+            const DeepCollectionEquality().equals(other.pos, pos));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(pos));
+
+  @JsonKey(ignore: true)
+  @override
+  $RemoveSessionCopyWith<RemoveSession> get copyWith =>
+      _$RemoveSessionCopyWithImpl<RemoveSession>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() getAllSessions,
+    required TResult Function(int pos) removeSession,
+  }) {
+    return removeSession(pos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
+  }) {
+    return removeSession?.call(pos);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? getAllSessions,
+    TResult Function(int pos)? removeSession,
+    required TResult orElse(),
+  }) {
+    if (removeSession != null) {
+      return removeSession(pos);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(GetAllSessions value) getAllSessions,
+    required TResult Function(RemoveSession value) removeSession,
+  }) {
+    return removeSession(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
+  }) {
+    return removeSession?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(GetAllSessions value)? getAllSessions,
+    TResult Function(RemoveSession value)? removeSession,
+    required TResult orElse(),
+  }) {
+    if (removeSession != null) {
+      return removeSession(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class RemoveSession implements SessionEvent {
+  const factory RemoveSession(int pos) = _$RemoveSession;
+
+  int get pos;
+  @JsonKey(ignore: true)
+  $RemoveSessionCopyWith<RemoveSession> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
