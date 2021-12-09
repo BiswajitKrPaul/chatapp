@@ -14,9 +14,9 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Map<String, dynamic> user;
+  late Map<String, dynamic> user;
   bool hasConnection;
-  Connectivity _connectivity = Connectivity();
+  final Connectivity _connectivity = Connectivity();
   late InternetCheckerBloc _interCheckerBloc;
 
   final isConnected = await Connectivity().checkConnectivity();

@@ -2,7 +2,6 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:chatapp/constants/api_constants.dart';
 import 'package:chatapp/models/sessions_db.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 class APIServer {
   static APIServer? _instance;
