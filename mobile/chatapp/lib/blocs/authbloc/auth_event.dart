@@ -19,3 +19,8 @@ class SignUp extends AuthEvent {
 class EmailVerificationCheck extends AuthEvent {
   EmailVerificationCheck();
 }
+
+class GetAuthInternetCheck extends AuthEvent {
+  final bool connectionStatus;
+  GetAuthInternetCheck({required this.connectionStatus});
+}

@@ -52,3 +52,9 @@ class EmailVerifyError extends AuthState {
   final String message;
   EmailVerifyError(this.message) : super({});
 }
+
+class AuthNoInternet extends EmailVerifyLoaded {
+  final bool isConnected;
+  final User u;
+  AuthNoInternet(this.isConnected, this.u) : super(u);
+}

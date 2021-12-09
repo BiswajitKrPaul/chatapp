@@ -1,15 +1,25 @@
+import 'dart:async';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:bloc/bloc.dart';
+import 'package:chatapp/blocs/internetbloc/internetchecker_bloc.dart';
 import 'package:chatapp/services/api_server.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({required Map<String, dynamic>? user}) : super(AuthInitial(user)) {
+  late InternetCheckerBloc internetCheckerbloc;
+  late StreamSubscription _subscription;
+  late Map<String, dynamic>? user;
+  AuthBloc({
+    required this.user,
+    required this.internetCheckerbloc,
+  }) : super(AuthInitial(user)) {
     on<Login>((event, emit) async {
       try {
         emit.call(LoginLoading());
@@ -71,5 +81,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       },
     );
+
+    on<GetAuthInternetCheck>((event, emit) async {
+      emit(AuthNoInternet(event.connectionStatus, User.fromMap(state.user)));
+    });
+    _subscription = internetCheckerbloc.stream.listen((newState) {
+      if (state.user.isNotEmpty) {
+        add(GetAuthInternetCheck(connectionStatus: newState.isConnected));
+      }
+    });
+  }
+  @override
+  Future<void> close() {
+    _subscription.cancel();
+    return super.close();
   }
 }

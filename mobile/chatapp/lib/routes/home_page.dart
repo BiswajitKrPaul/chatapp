@@ -1,4 +1,5 @@
 import 'package:chatapp/blocs/authbloc/auth_bloc.dart';
+import 'package:chatapp/blocs/internetbloc/internetchecker_bloc.dart';
 import 'package:chatapp/routes/bottom_app_bar_home.dart';
 import 'package:chatapp/widgets/email_not_verified.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onTap() {
-    context.read<AuthBloc>().add(EmailVerificationCheck());
+    final state = BlocProvider.of<InternetCheckerBloc>(context).state;
+    if (state.isConnected) {
+      context.read<AuthBloc>().add(EmailVerificationCheck());
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No Internet Connection')),
+      );
+    }
   }
 
   @override
@@ -34,6 +42,13 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
+          if (state is AuthNoInternet) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.isConnected ? 'Online' : 'Offline'),
+              ),
+            );
+          }
         },
         builder: (context, state) {
           if (state is EmailVerifyLoading) {
@@ -41,18 +56,14 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             );
           }
-          if (state is EmailVerifyLoaded) {
-            if (state.currentUser.emailVerification) {
-              return const CustomBottomAppBar();
-            } else {
-              return EmailNotVerified(
-                onTap: onTap,
-              );
-            }
+          if (state is EmailNotVerified ||
+              state.user['emailVerification'] == false) {
+            return EmailNotVerified(
+              onTap: onTap,
+            );
           }
-          return EmailNotVerified(
-            onTap: onTap,
-          );
+
+          return const CustomBottomAppBar();
         },
       ),
     );
