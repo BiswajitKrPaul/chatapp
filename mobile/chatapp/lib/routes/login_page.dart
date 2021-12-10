@@ -5,6 +5,7 @@ import 'package:chatapp/routes/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = 'Login';
@@ -39,8 +40,13 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 200.h,
+                    width: 200.w,
+                    child: SvgPicture.asset('assets/login_page.svg'),
+                  ),
                   TextFormField(
                     controller: _email,
                     decoration: const InputDecoration(

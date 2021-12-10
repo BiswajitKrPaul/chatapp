@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:chatapp/blocs/authbloc/auth_bloc.dart';
 import 'package:chatapp/blocs/internetbloc/internetchecker_bloc.dart';
 import 'package:chatapp/blocs/sessionbloc/session_bloc.dart';
+import 'package:chatapp/constants/color_constants.dart';
 import 'package:chatapp/routes/home_page.dart';
 import 'package:chatapp/routes/login_page.dart';
 import 'package:chatapp/routes/signup_page.dart';
@@ -17,18 +18,13 @@ Future<void> main() async {
   late Map<String, dynamic> user;
   bool hasConnection;
   final Connectivity _connectivity = Connectivity();
-  late InternetCheckerBloc _interCheckerBloc;
 
-  final isConnected = await Connectivity().checkConnectivity();
+  final isConnected = await _connectivity.checkConnectivity();
   if (isConnected == ConnectivityResult.none) {
     hasConnection = false;
   } else {
     hasConnection = await InternetConnectionChecker().hasConnection;
   }
-  _interCheckerBloc = InternetCheckerBloc(
-    connectivity: _connectivity,
-    initialVal: hasConnection,
-  );
   try {
     final response = await APIServer.instance.getLoggedInUser();
     user = response.toMap();
@@ -39,12 +35,15 @@ Future<void> main() async {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (ctx) => _interCheckerBloc,
+          create: (ctx) => InternetCheckerBloc(
+            connectivity: _connectivity,
+            initialVal: hasConnection,
+          ),
         ),
         BlocProvider(
           create: (ctx) => AuthBloc(
             user: user,
-            internetCheckerbloc: _interCheckerBloc,
+            internetCheckerbloc: ctx.read<InternetCheckerBloc>(),
           ),
         ),
         BlocProvider(
@@ -79,8 +78,12 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Chat App',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
+          theme: ThemeData().copyWith(
+            colorScheme: const ColorScheme.light().copyWith(
+              secondary: AppColors.accent,
+              primary: AppColors.primary,
+              onPrimary: AppColors.onPrimary,
+            ),
           ),
           home: _currentUser.isEmpty ? const LoginPage() : const HomePage(),
           routes: {

@@ -16,23 +16,14 @@ class _SessionListsState extends State<SessionLists> {
   void initState() {
     super.initState();
     final stateVal = BlocProvider.of<SessionBloc>(context).state;
-    if (stateVal.sessionList.sessions.isEmpty) {
+    if (stateVal.sessionList.sessions.isEmpty || stateVal.hasErrorOccured) {
       context.read<SessionBloc>().add(const SessionEvent.getAllSessions());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SessionBloc, SessionState>(
-      listener: (context, state) {
-        if (state.hasErrorOccured) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Error Occured Due to : ${state.errorMessage}'),
-            ),
-          );
-        }
-      },
+    return BlocBuilder<SessionBloc, SessionState>(
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
