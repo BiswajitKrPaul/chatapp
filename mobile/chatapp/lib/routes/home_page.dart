@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<AuthBloc>().add(EmailVerificationCheck());
   }
 
   void onTap() {
@@ -35,13 +34,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is EmailVerifyError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
-          }
           if (state is AuthNoInternet) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -62,7 +54,9 @@ class _HomePageState extends State<HomePage> {
               onTap: onTap,
             );
           }
-
+          if (state.user['emailVerification']) {
+            return const CustomBottomAppBar();
+          }
           return const CustomBottomAppBar();
         },
       ),

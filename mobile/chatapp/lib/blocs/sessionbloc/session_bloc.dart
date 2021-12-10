@@ -22,7 +22,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
               hasErrorOccured: false));
         } on AppwriteException catch (e) {
           emit(state.copyWith(
-            sessionList: SessionList(sum: 0, sessions: []),
+            sessionList: state.sessionList,
             isLoading: false,
             errorMessage: e.message ?? 'Error Occured',
             hasErrorOccured: true,
@@ -38,10 +38,13 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         );
         add(const SessionEvent.getAllSessions());
       } on AppwriteException catch (err) {
-        emit(state.copyWith(
-          errorMessage: err.message ?? 'Error Occured',
-          hasErrorOccured: true,
-        ));
+        emit(
+          state.copyWith(
+            errorMessage: err.message ?? 'Error Occured',
+            hasErrorOccured: true,
+            sessionList: state.sessionList,
+          ),
+        );
       }
     });
   }

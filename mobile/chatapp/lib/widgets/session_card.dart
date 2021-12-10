@@ -1,3 +1,4 @@
+import 'package:chatapp/blocs/internetbloc/internetchecker_bloc.dart';
 import 'package:chatapp/blocs/sessionbloc/session_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,9 +47,15 @@ class SessionCard extends StatelessWidget {
             ? null
             : IconButton(
                 onPressed: () {
-                  context
-                      .read<SessionBloc>()
-                      .add(SessionEvent.removeSession(pos));
+                  if (context.read<InternetCheckerBloc>().state.isConnected) {
+                    context
+                        .read<SessionBloc>()
+                        .add(SessionEvent.removeSession(pos));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('No Internet Connections')),
+                    );
+                  }
                 },
                 icon: const Icon(LineIcons.alternateTrashAlt),
               ),

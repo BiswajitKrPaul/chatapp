@@ -50,7 +50,8 @@ class EmailVerifyLoaded extends AuthState {
 
 class EmailVerifyError extends AuthState {
   final String message;
-  EmailVerifyError(this.message) : super({});
+  final User currentUser;
+  EmailVerifyError(this.message, this.currentUser) : super(currentUser.toMap());
 }
 
 class AuthNoInternet extends EmailVerifyLoaded {

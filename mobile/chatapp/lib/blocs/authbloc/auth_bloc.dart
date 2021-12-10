@@ -76,6 +76,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(
             EmailVerifyError(
               e.message.toString(),
+              User.fromMap(state.user),
             ),
           );
         }

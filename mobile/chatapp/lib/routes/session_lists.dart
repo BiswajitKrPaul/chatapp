@@ -23,16 +23,18 @@ class _SessionListsState extends State<SessionLists> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SessionBloc, SessionState>(
+    return BlocConsumer<SessionBloc, SessionState>(
+      listener: (ctx, state) {
+        if (state.hasErrorOccured) {
+          ScaffoldMessenger.of(ctx).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
+      },
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
             child: CircularProgressIndicator(),
-          );
-        }
-        if (state.hasErrorOccured) {
-          return const Center(
-            child: Text('Error'),
           );
         } else {
           return Padding(
