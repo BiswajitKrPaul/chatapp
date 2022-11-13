@@ -9,6 +9,15 @@ class AppThemeData {
         textTheme: GoogleFonts.robotoTextTheme()
             .apply(bodyColor: ColorConstants.onPrimary),
         scaffoldBackgroundColor: ColorConstants.primary,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ColorConstants.primaryDark,
+            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
         appBarTheme: const AppBarTheme(elevation: 0),
         colorScheme: const ColorScheme.light(
           primary: ColorConstants.primary,
