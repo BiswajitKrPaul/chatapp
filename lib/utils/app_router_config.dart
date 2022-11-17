@@ -1,22 +1,28 @@
-import 'package:chatapp/features/auth/screens/login_page.dart';
+import 'package:chatapp/application/connection_checker/connection_checker_cubit.dart';
+import 'package:chatapp/features/auth/views/login_page.dart';
+import 'package:chatapp/features/auth/views/verify_otp.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRouterConfig {
-  static GoRouter get route => GoRouter(
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (BuildContext context, GoRouterState state) {
-              return const LoginPage();
-            },
-          ),
-          GoRoute(
-            path: '/b',
-            builder: (BuildContext context, GoRouterState state) {
-              return Container();
-            },
-          ),
-        ],
-      );
+  static Route<dynamic>? route(RouteSettings settings) {
+    return MaterialPageRoute(
+      builder: (context) {
+        if (!context.watch<ConnectionCheckerCubit>().state.hasConnection) {
+          return const Scaffold(
+            body: Center(
+              child: Text('No Internet'),
+            ),
+          );
+        }
+        switch (settings.name) {
+          case LoginPage.routeName:
+            return const LoginPage();
+          case VerifyOtp.routeName:
+            return const VerifyOtp();
+        }
+        return Container();
+      },
+    );
+  }
 }

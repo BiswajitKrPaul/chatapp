@@ -6,8 +6,10 @@ class AppThemeData {
   AppThemeData._();
 
   static ThemeData get theme => ThemeData().copyWith(
-        textTheme: GoogleFonts.robotoTextTheme()
-            .apply(bodyColor: ColorConstants.onPrimary),
+        textTheme: GoogleFonts.robotoTextTheme().apply(
+          bodyColor: ColorConstants.onPrimary,
+          displayColor: ColorConstants.onPrimary,
+        ),
         scaffoldBackgroundColor: ColorConstants.primary,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "464548587021",
+    "project_id": "bongchat-88633",
+    "storage_bucket": "bongchat-88633.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464548587021:android:433ddb8ba7d2c3673a1744",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464548587021-58omls164k905bija22o98fbd11gmu68.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5ZeWUpK9k5Ysk8tw2tBltdM4H5kjuK0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464548587021-58omls164k905bija22o98fbd11gmu68.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

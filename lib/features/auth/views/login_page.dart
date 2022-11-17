@@ -1,3 +1,4 @@
+import 'package:chatapp/features/auth/views/verify_otp.dart';
 import 'package:chatapp/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,7 +38,7 @@ class LoginPage extends StatelessWidget {
                     TextField(
                       textInputAction: TextInputAction.done,
                       maxLength: 10,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.phone,
                       style: Theme.of(context)
                           .textTheme
                           .bodyText1
@@ -65,6 +66,7 @@ class LoginPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         FocusManager.instance.primaryFocus?.unfocus();
+                        Navigator.of(context).pushNamed(VerifyOtp.routeName);
                       },
                       child: const Text('Login'),
                     )
