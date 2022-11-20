@@ -1,3 +1,4 @@
+import 'package:chatapp/features/home/home_page.dart';
 import 'package:chatapp/utils/app_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
@@ -49,6 +50,11 @@ class VerifyOtp extends StatelessWidget {
                   focusedPinTheme: pinTheme.copyWith(
                     height: 62,
                     width: 56,
+                  ),
+                  onCompleted: (value) => Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    HomePage.routeName,
+                    (route) => false,
                   ),
                 ),
               )
